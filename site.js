@@ -1,9 +1,10 @@
 const byId = id => document.getElementById(id);
 
 function setupMusic() {
-  const cueMs = 497000;
   const preview = byId("preview");
   const time = byId("cue-time");
+  const cueMs = Number(preview.dataset.cueSeconds) * 1000;
+  const cueLabel = time.textContent;
   const script = document.createElement("script");
   script.src = "https://w.soundcloud.com/player/api.js";
   script.onload = () => {
@@ -12,10 +13,20 @@ function setupMusic() {
     let ready = false;
     let needsCue = true;
     let pending = 0;
+    let position = cueMs;
+
+    function publishPosition(next = position) {
+      if (!Number.isFinite(next)) return;
+      position = next;
+      window.dispatchEvent(new CustomEvent("vaughn:transport", {
+        detail: { position, playing }
+      }));
+    }
 
     function setPlayback(active) {
       clearTimeout(pending);
       playing = active;
+      publishPosition();
       document.body.classList.toggle("playing", active);
       byId("preview-label").textContent = active ? "Pause the mix" : "Resume the mix";
     }
@@ -28,16 +39,20 @@ function setupMusic() {
       }
       setPlayback(true);
     });
-    widget.bind(SC.Widget.Events.PLAY_PROGRESS, event => {
+    function progress(event) {
+      publishPosition(event.currentPosition);
       const seconds = Math.floor(event.currentPosition / 1000);
       time.textContent = Math.floor(seconds / 60) + ":" + String(seconds % 60).padStart(2, "0");
-    });
+    }
+    widget.bind(SC.Widget.Events.PLAY_PROGRESS, progress);
+    widget.bind(SC.Widget.Events.SEEK, progress);
     widget.bind(SC.Widget.Events.PAUSE, () => setPlayback(false));
     widget.bind(SC.Widget.Events.FINISH, () => {
       setPlayback(false);
       needsCue = true;
       byId("preview-label").textContent = "Replay the break";
-      time.textContent = "Cue 08:17";
+      position = cueMs;
+      time.textContent = cueLabel;
     });
     preview.addEventListener("click", event => {
       if (!ready || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;

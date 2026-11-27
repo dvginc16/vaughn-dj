@@ -16,6 +16,8 @@
     varying vec2 imagePoint;
     uniform float phase;
     uniform float energy;
+    uniform float rise;
+    uniform float quiet;
     float region(vec2 p, vec2 center, vec2 size) {
       vec2 d = (p-center)/size;
       return exp(-dot(d,d));
@@ -31,6 +33,10 @@
       float foot = region(p,vec2(.72,.80),vec2(.09,.068));
       float angle = (.038*roll+.023*beat)*head*energy;
       vec2 d = p-vec2(.59,.365);
+      // Headphone lean in the breakdown, shoulder recoil as the kick returns.
+      p.x += shoulder*(quiet*.028*sin(phase*.125)+rise*.027*beat);
+      p.y -= head*quiet*.012 + shoulder*rise*.018*max(0.0,cos(phase));
+      p.y += hand*.016*rise*sin(phase);
       p += vec2(-d.y*angle,d.x*angle);
       p.x += energy*(shoulder*.019*roll + ear*.013*sin(phase-.65));
       p.y += energy*(shoulder*.010*(1.0-cos(phase)) + head*.004*beat);
@@ -67,6 +73,20 @@
   gl.vertexAttribPointer(attr,2,gl.FLOAT,false,0,0);
   const phase = gl.getUniformLocation(program,"phase");
   const energy = gl.getUniformLocation(program,"energy");
+  const quiet = gl.getUniformLocation(program,"quiet");
+  const rise = gl.getUniformLocation(program,"rise");
+  let trackMs = 560000, lastReport = 0, playing = false;
+  window.addEventListener("vaughn:transport", ({detail}) => {
+    trackMs = detail.position;
+    lastReport = performance.now();
+    playing = detail.playing;
+  });
+  function level(seconds) {
+    const sample = Math.max(0, Math.min(mixLevels.length-1, seconds*mixLevels.length/2984.716));
+    const left = Math.floor(sample);
+    return mixLevels[left]+(sample-left)*(mixLevels[Math.min(left+1,mixLevels.length-1)]-mixLevels[left]);
+  }
+  const unit = value => Math.max(0,Math.min(1,value));
   let paused = preference.matches;
   let visible = true;
   let loaded = false;
@@ -79,9 +99,15 @@
     if (!loaded || paused || !visible || document.hidden) return;
     const delta = now-lastFrame;
     if (delta >= 32) {
-      const active = document.body.classList.contains("playing");
-      elapsed += Math.min(delta,70) * (active ? .01255 : .0058);
-      strength += ((active ? 1.7 : .78)-strength)*.1;
+      const seconds = (trackMs+Math.min(now-lastReport,450))/1000;
+      const volume = level(seconds)*.55+level(seconds-.7)*.45;
+      const drive = unit((volume-82)/43);
+      const accent = unit((volume-level(seconds-3.2)-5)/29);
+      if (playing) elapsed = (seconds-.1655)*Math.PI*2*119.8/60;
+      else elapsed += Math.min(delta,70)*.0032;
+      strength += ((playing ? .38+drive*1.65+accent*.65 : .55)-strength)*.18;
+      gl.uniform1f(quiet,playing ? 1-drive : 0);
+      gl.uniform1f(rise,playing ? accent : 0);
       lastFrame = now;
       gl.uniform1f(phase,elapsed);
       gl.uniform1f(energy,strength);
