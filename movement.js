@@ -10,6 +10,8 @@
   if (!ctx) return;
   const upper = document.createElement("canvas");
   const cut = upper.getContext("2d");
+  const booth = document.createElement("canvas");
+  const fixed = booth.getContext("2d");
   let paused = reduced.matches, visible = true, playing = false, frame;
   let position = Number(document.querySelector('#preview').dataset.cueSeconds), reported = 0, intensity = 0, last = 0;
   const clamp = n => Math.max(0, Math.min(1,n));
@@ -33,18 +35,32 @@
     const localReference = average(t-17,21);
     const groove = clamp((recent-84+(recent-localReference)*.45)/37);
     intensity += ((playing ? groove : 0)-intensity)*.13;
-    const beat = (t-420.5)*Math.PI*2*120/60;
+    const beats = playing ? (t-420.5)*2 : now/510;
+    const beat = beats*Math.PI*2;
     const nod = Math.pow(Math.max(0,Math.cos(beat)),3);
     const sway = playing ? Math.sin(beat/8) : Math.sin(now/1400);
     const lean = sway*(1-intensity);
     const returnAccent = playing ? clamp((average(t-1,2)-average(t-6,3)-8)/30) : 0;
+    // Crossfade poses at the end of each musical phrase.
+    const poses = [
+      [13*Math.sin(beat/4), 0, .035*Math.sin(beat/4)],
+      [0, 15*nod, .017*Math.sin(beat)],
+      [-18, 4+3*nod, -.035+.012*Math.sin(beat/4)],
+      [17*Math.sin(beat/2), 8*nod, -.032*Math.sin(beat/2)],
+      [7*Math.sin(beat), 12*nod+4*Math.sin(beat/4), .025*Math.sin(beat/2)]
+    ];
+    const phrase = ((beats/8)%5+5)%5;
+    const index = Math.floor(phrase);
+    const blend = clamp((phrase-index-.75)*4);
+    const pose = poses[index].map((value,i) => value+(poses[(index+1)%5][i]-value)*blend);
+    const drive = playing ? .44+.56*intensity : .94;
     ctx.clearRect(0,0,1135,1386);
     ctx.save();
-    ctx.translate(619+lean*12,745+nod*intensity*10);
-    ctx.rotate(lean*.019+intensity*Math.sin(beat/2)*.028+returnAccent*.016*nod);
-    ctx.drawImage(upper,-619,-745);
+    ctx.translate(619+pose[0]*drive+lean*5,690+pose[1]*drive+returnAccent*8*nod);
+    ctx.rotate(pose[2]*drive);
+    ctx.drawImage(upper,-619,-690);
     ctx.restore();
-    ctx.drawImage(photo,0,774,1135,612,0,774,1135,612);
+    ctx.drawImage(booth,0,0);
     canvas.hidden = false;
     photo.style.visibility = "hidden";
   }
@@ -61,8 +77,17 @@
     if (!photo.naturalWidth) return;
     canvas.width = upper.width = 1135;
     canvas.height = 1386;
-    upper.height = 774;
+    upper.height = 741;
     cut.drawImage(photo,0,0);
+    booth.width = 1135;
+    booth.height = 1386;
+    fixed.drawImage(photo,0,0);
+    const edge = fixed.createLinearGradient(0,625,0,716);
+    edge.addColorStop(0,"transparent");
+    edge.addColorStop(1,"black");
+    fixed.globalCompositeOperation = "destination-in";
+    fixed.fillStyle = edge;
+    fixed.fillRect(0,0,1135,1386);
     control.hidden = false;
     control.onclick = () => { paused = !paused; sync(); };
     reduced.addEventListener("change",() => { paused = reduced.matches; sync(); });

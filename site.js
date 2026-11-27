@@ -14,6 +14,12 @@ function setupMusic() {
     let needsCue = true;
     let pending = 0;
     let position = cueMs;
+    let interacted = false;
+    window.addEventListener("pointerdown", event => {
+      if (interacted || playing || !ready || event.target.closest("a,button")) return;
+      interacted = true;
+      widget.play();
+    }, {passive:true});
 
     function publishPosition(next = position) {
       if (!Number.isFinite(next)) return;
@@ -38,6 +44,7 @@ function setupMusic() {
       widget.play();
     });
     widget.bind(SC.Widget.Events.PLAY, () => {
+      interacted = true;
       if (needsCue) {
         needsCue = false;
         widget.seekTo(cueMs);
@@ -67,7 +74,6 @@ function setupMusic() {
       widget.play();
       clearTimeout(pending);
       pending = setTimeout(() => {
-        ready = false;
         byId("preview-label").textContent = "Play on SoundCloud";
       }, 4500);
     });
