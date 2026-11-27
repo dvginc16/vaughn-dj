@@ -17,11 +17,13 @@ function setupMusic() {
     let position = cueMs;
     let interacted = false;
     function startOnInteraction(event) {
-      if (interacted || playing || !ready || event.target.closest("a,button")) return;
+      if (interacted || playing || !ready || event.target.closest("#preview,[data-jump]")) return;
       widget.play();
     }
     window.addEventListener("click", startOnInteraction);
-    window.addEventListener("keydown", startOnInteraction);
+    window.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") startOnInteraction(event);
+    });
 
     document.querySelectorAll("[data-jump]").forEach(link => {
       link.addEventListener("click", event => {
@@ -47,7 +49,7 @@ function setupMusic() {
       playing = active;
       publishPosition();
       document.body.classList.toggle("playing", active);
-      byId("preview-label").textContent = active ? "Pause the mix" : "Sound on";
+      byId("preview-label").textContent = active ? "Pause the mix" : "Tap for sound";
     }
 
     widget.bind(SC.Widget.Events.READY, () => {
