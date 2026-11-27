@@ -11,10 +11,10 @@
   const upper = document.createElement("canvas");
   const cut = upper.getContext("2d");
   let paused = reduced.matches, visible = true, playing = false, frame;
-  let position = 560, reported = 0, intensity = 0, last = 0;
+  let position = Number(document.querySelector('#preview').dataset.cueSeconds), reported = 0, intensity = 0, last = 0;
   const clamp = n => Math.max(0, Math.min(1,n));
   function average(seconds, window) {
-    const start = Math.max(0,Math.floor(seconds*mixLevels.length/2984.716));
+    const start = Math.max(0,Math.floor(seconds*mixLevels.length/3052.146));
     const end = Math.min(mixLevels.length, start+window);
     return mixLevels.slice(start,end).reduce((sum,n)=>sum+n,0)/Math.max(1,end-start);
   }
@@ -33,7 +33,7 @@
     const localReference = average(t-17,21);
     const groove = clamp((recent-84+(recent-localReference)*.45)/37);
     intensity += ((playing ? groove : 0)-intensity)*.13;
-    const beat = (t-.1655)*Math.PI*2*119.8/60;
+    const beat = (t-420.5)*Math.PI*2*120/60;
     const nod = Math.pow(Math.max(0,Math.cos(beat)),3);
     const sway = playing ? Math.sin(beat/8) : Math.sin(now/1400);
     const lean = sway*(1-intensity);

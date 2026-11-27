@@ -31,7 +31,12 @@ function setupMusic() {
       byId("preview-label").textContent = active ? "Pause the mix" : "Resume the mix";
     }
 
-    widget.bind(SC.Widget.Events.READY, () => { ready = true; });
+    widget.bind(SC.Widget.Events.READY, () => {
+      if (ready) return;
+      ready = true;
+      widget.seekTo(cueMs);
+      widget.play();
+    });
     widget.bind(SC.Widget.Events.PLAY, () => {
       if (needsCue) {
         needsCue = false;
