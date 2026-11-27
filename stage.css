@@ -32,6 +32,7 @@ nav a { padding: 14px 0; }
 .light { background: radial-gradient(ellipse at 78% 7%,#a396d24a,transparent 42%),linear-gradient(118deg,transparent 58%,#bfb6ef12 63%,transparent 70%); }
 .performer { position: absolute; top: 1.5%; right: 1%; width: min(53vw,750px); aspect-ratio: 1135 / 1386; }
 .performer img,.performer canvas { display: block; width: 100%; height: 100%; position: absolute; inset: 0; }
+.performer { mask-image: linear-gradient(#000 68%,transparent 73%); }
 .scene::after { content: ""; background: linear-gradient(90deg,#151319bd 0%,#14121928 45%,transparent 66%),linear-gradient(0deg,#111015e6,transparent 18%); }
 .hero-copy { padding: 60px var(--pad) 100px; width: fit-content; }
 .location,.kicker,.cue-time,.track time { font: 500 12px/1.5 "Courier New",monospace; }
