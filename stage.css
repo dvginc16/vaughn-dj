@@ -100,7 +100,7 @@ footer { padding: 24px var(--pad); border-top: 1px solid var(--line); font-size:
   .location { margin-bottom: 11px; }
   h1 { font-size: clamp(64px,18.7vw,118px); }
   .genre { margin: 9px 0; } .actions { margin-top: 21px; }
-  .motion { top: 12px; right: 14px; bottom: auto; font-size: 11px; }
+  .motion { top: 12px; left: var(--pad); right: auto; bottom: auto; font-size: 12px; }
   .section-head { flex-wrap: wrap; gap: 2px 14px; margin-bottom: 18px; }
   .feature { flex-direction: column; align-items: stretch; gap: 20px; }
   .listen { width: 100%; }
