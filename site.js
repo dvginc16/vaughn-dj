@@ -15,11 +15,12 @@ function setupMusic() {
     let pending = 0;
     let position = cueMs;
     let interacted = false;
-    window.addEventListener("pointerdown", event => {
+    function startOnInteraction(event) {
       if (interacted || playing || !ready || event.target.closest("a,button")) return;
-      interacted = true;
       widget.play();
-    }, {passive:true});
+    }
+    window.addEventListener("click", startOnInteraction);
+    window.addEventListener("keydown", startOnInteraction);
 
     function publishPosition(next = position) {
       if (!Number.isFinite(next)) return;
