@@ -22,6 +22,16 @@ function setupMusic() {
     window.addEventListener("click", startOnInteraction);
     window.addEventListener("keydown", startOnInteraction);
 
+    document.querySelectorAll("[data-jump]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (!ready || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        needsCue = false;
+        widget.seekTo(Number(link.dataset.jump) * 1000);
+        widget.play();
+      });
+    });
+
     function publishPosition(next = position) {
       if (!Number.isFinite(next)) return;
       position = next;
@@ -35,12 +45,13 @@ function setupMusic() {
       playing = active;
       publishPosition();
       document.body.classList.toggle("playing", active);
-      byId("preview-label").textContent = active ? "Pause the mix" : "Resume the mix";
+      byId("preview-label").textContent = active ? "Pause the mix" : "Sound on";
     }
 
     widget.bind(SC.Widget.Events.READY, () => {
       if (ready) return;
       ready = true;
+      widget.setVolume(85);
       widget.seekTo(cueMs);
       widget.play();
     });
@@ -163,4 +174,3 @@ function setupLove() {
 }
 setupMusic();
 setupLove();
-

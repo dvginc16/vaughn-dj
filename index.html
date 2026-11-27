@@ -10,11 +10,25 @@
   <meta property="og:description" content="From South Africa. For the dance floor. Play R@ndom Styles.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://dvginc16.github.io/vaughn-dj/vaughn-booth.webp">
+  <link rel="preconnect" href="https://w.soundcloud.com">
   <link rel="canonical" href="https://dvginc16.github.io/vaughn-dj/">
   <link rel="stylesheet" href="stage.css?v=setfilm">
-  <script src="site.js?v=poses" defer></script>
+  <script src="site.js?v=floor-cut" defer></script>
   <script src="mix-levels.js?v=655" defer></script>
-<style>.set-film{position:absolute;inset:0 0 0 auto;width:68%;height:100%;object-fit:cover;mask-image:linear-gradient(90deg,transparent,black 24%)}@media(max-width:760px){.set-film{width:100%;mask-image:none}}</style></head>
+<style>.set-film{position:absolute;inset:0 0 0 auto;width:68%;height:100%;object-fit:cover;mask-image:linear-gradient(90deg,transparent,black 24%)}@media(max-width:760px){.set-film{width:100%;mask-image:none}}
+@media(prefers-reduced-motion:no-preference){
+  #artist{animation:violet-title 3.8s ease-in-out infinite}
+  body.playing #artist{animation-duration:1.98s}
+  @keyframes violet-title{0%,48%,100%{color:#fffafc;text-shadow:0 0 2px #ffffff33}24%,69%{color:#d4acff;text-shadow:0 0 .13em #ac65ffc9,0 0 .38em #753df555}80%{color:white}}
+}
+.cue-desk{margin:24px 0 12px;padding:clamp(16px,3vw,36px);border:1px solid #665078;background:linear-gradient(115deg,#261f30,#17151d);border-radius:3px}
+.cue-desk h3{font-size:clamp(22px,3vw,36px);letter-spacing:-.04em}
+.cue-desk svg{width:100%;height:48px;display:block;margin:16px 0;color:#c79aff}
+.cue-links{display:flex;gap:10px;flex-wrap:wrap}
+.cue-links a{border:1px solid #725c84;border-radius:24px;padding:8px 14px;color:white;font-size:14px}
+.cue-links a:hover,.cue-links a:focus-visible{background:#503b62}
+.feature{background:linear-gradient(90deg,#221e29ee,#221b2dda),url('silhouette-03.jpg') center 45%/cover}
+</style></head>
 <body>
 <a class="skip" href="#music">Skip to music</a>
 <header class="mast" id="top">
@@ -25,7 +39,7 @@
   <section class="hero" aria-labelledby="artist">
     <div class="scene" aria-hidden="true">
       <div class="light"></div>
-      <video class="set-film" autoplay muted playsinline loop preload="auto" poster="vaughn-booth.webp" src="https://d8j0ntlcm91z4.cloudfront.net/user_3KbBI9x2izgWcGZGxXvjeAb8m2N/hf_20261127_095439_c9863a3a-af6d-467f-97a7-9083021cd9d5.mp4"></video>
+      <video class="set-film" autoplay muted playsinline loop preload="auto" poster="vaughn-booth.webp" src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KbBI9x2izgWcGZGxXvjeAb8m2N/18b79250-8cca-48bd-8a53-3f6bc402742c.mp4"></video>
     </div>
     <div class="hero-copy">
       <p class="location"><i></i>South Africa</p>
@@ -33,7 +47,7 @@
       <p class="genre">House after dark.</p>
       <p class="intro">Deep grooves, Afro house and late-night club sets.</p>
       <div class="actions">
-        <a class="button primary" id="preview" data-cue-seconds="415" href="https://soundcloud.com/vaughnenslin/r-ndom-styles-afro-tech-house#t=6:55"><span class="play-icon" aria-hidden="true"></span><span id="preview-label">Play the break</span></a>
+        <a class="button primary" id="preview" data-cue-seconds="415" href="https://soundcloud.com/vaughnenslin/r-ndom-styles-afro-tech-house#t=6:55"><span class="play-icon" aria-hidden="true"></span><span id="preview-label">Sound on</span></a>
         <a class="text-action" href="https://wa.me/27609099466?text=Hi%20Dan%2C%20I%27d%20like%20to%20book%20Vaughn.%20Date%3A%20%E2%80%A6%20Venue%3A%20%E2%80%A6%20Set%20length%3A%20%E2%80%A6" target="_blank" rel="noopener" aria-label="Book Vaughn with Dan the Manager on WhatsApp">Book Vaughn <span aria-hidden="true">↗</span></a>
       </div>
     </div>
@@ -44,8 +58,9 @@
     <div class="section-head"><h2 id="music-heading">In the mix<span>.</span></h2><a class="text-action" href="https://soundcloud.com/vaughnenslin" target="_blank" rel="noopener">Follow on SoundCloud ↗</a></div>
     <div class="feature">
       <div><p class="kicker">Featured mix</p><h3>R@ndom Styles</h3><p>Afro tech house <span class="mid">/</span> 50:52</p></div>
-      <div class="listen"><iframe id="widget" title="Play R@ndom Styles by Vaughn on SoundCloud" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fvaughnenslin%2Fr-ndom-styles-afro-tech-house&amp;auto_play=true&amp;show_artwork=false&amp;show_comments=false&amp;show_reposts=false&amp;color=%238a72c7"></iframe><a href="https://soundcloud.com/vaughnenslin/r-ndom-styles-afro-tech-house#t=6:55" target="_blank" rel="noopener">Like or listen on SoundCloud ↗</a></div>
+      <div class="listen"><iframe id="widget" loading="eager" title="Play R@ndom Styles by Vaughn on SoundCloud" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fvaughnenslin%2Fr-ndom-styles-afro-tech-house&amp;auto_play=true&amp;show_artwork=false&amp;show_comments=false&amp;show_reposts=false&amp;color=%238a72c7"></iframe><a href="https://soundcloud.com/vaughnenslin/r-ndom-styles-afro-tech-house#t=6:55" target="_blank" rel="noopener">Like or listen on SoundCloud ↗</a></div>
     </div>
+    <div class="cue-desk"><h3>Drop into the mix</h3><svg viewBox="0 0 512 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 10.5v27.0 M4 12.1v23.8 M8 10.5v27.0 M12 10.5v27.0 M16 14.9v18.2 M20 14.7v18.6 M24 11.4v25.2 M28 10.9v26.2 M32 10.2v27.6 M36 17.6v12.8 M40 14.1v19.8 M44 15.6v16.8 M48 10.9v26.2 M52 11.1v25.8 M56 11.1v25.8 M60 12.7v22.6 M64 10.5v27.0 M68 14.9v18.2 M72 10.5v27.0 M76 11v26.0 M80 15.2v17.6 M84 10.6v26.8 M88 11.1v25.8 M92 14.7v18.6 M96 13.7v20.6 M100 11.5v25.0 M104 14v20.0 M108 10.9v26.2 M112 11.2v25.6 M116 10.8v26.4 M120 10.3v27.4 M124 10.2v27.6 M128 10.5v27.0 M132 12.2v23.6 M136 10.2v27.6 M140 10.5v27.0 M144 10.4v27.2 M148 13.2v21.6 M152 10.6v26.8 M156 10.6v26.8 M160 11.3v25.4 M164 10.5v27.0 M168 10.6v26.8 M172 10.1v27.8 M176 10.7v26.6 M180 11.1v25.8 M184 15.9v16.2 M188 12.7v22.6 M192 10.4v27.2 M196 11.1v25.8 M200 10.5v27.0 M204 11.3v25.4 M208 10.1v27.8 M212 13.7v20.6 M216 10.9v26.2 M220 11v26.0 M224 11.5v25.0 M228 11.4v25.2 M232 10.4v27.2 M236 13.8v20.4 M240 13.5v21.0 M244 11.1v25.8 M248 10.6v26.8 M252 14.8v18.4 M256 14.6v18.8 M260 12.7v22.6 M264 10.6v26.8 M268 10.8v26.4 M272 10.4v27.2 M276 11.9v24.2 M280 15.5v17.0 M284 13.9v20.2 M288 13.2v21.6 M292 11.4v25.2 M296 11.1v25.8 M300 13.5v21.0 M304 11v26.0 M308 12v24.0 M312 15.8v16.4 M316 11.6v24.8 M320 12.2v23.6 M324 17v14.0 M328 14.6v18.8 M332 14.2v19.6 M336 11.4v25.2 M340 12v24.0 M344 10.9v26.2 M348 11.6v24.8 M352 11.3v25.4 M356 12.3v23.4 M360 11.2v25.6 M364 11.7v24.6 M368 11.5v25.0 M372 11.9v24.2 M376 11.4v25.2 M380 11.8v24.4 M384 11.8v24.4 M388 11.3v25.4 M392 10.8v26.4 M396 10.9v26.2 M400 11.3v25.4 M404 14.5v19.0 M408 14.3v19.4 M412 12.3v23.4 M416 10.8v26.4 M420 11.3v25.4 M424 10.5v27.0 M428 16.1v15.8 M432 10.3v27.4 M436 11v26.0 M440 16.3v15.4 M444 15.3v17.4 M448 11.4v25.2 M452 11v26.0 M456 10.9v26.2 M460 16.2v15.6 M464 14.4v19.2 M468 11.3v25.4 M472 10.7v26.6 M476 11.2v25.6 M480 11.6v24.8 M484 11.4v25.2 M488 10.9v26.2 M492 13.1v21.8 M496 13v22.0 M500 12.6v22.8 M504 11v26.0 M508 10.5v27.0" stroke="currentColor" stroke-width="2.5"/></svg><div class="cue-links"><a href="https://soundcloud.com/vaughnenslin/r-ndom-styles-afro-tech-house#t=6:55" data-jump="415">6:55 · The break</a><a href="https://soundcloud.com/vaughnenslin/r-ndom-styles-afro-tech-house#t=20:00" data-jump="1200">20:00 · Mid-set</a><a href="https://soundcloud.com/vaughnenslin/r-ndom-styles-afro-tech-house#t=40:00" data-jump="2400">40:00 · Late set</a></div></div>
     <a class="track" href="https://soundcloud.com/vaughnenslin/r-ndom-styles-lost-in-the" target="_blank" rel="noopener"><span>Lost in the Woods <small>Afro house</small></span><time datetime="PT49M44S">49:44</time><span aria-hidden="true">↗</span></a>
     <a class="track" href="https://soundcloud.com/vaughnenslin/r-dom-styles-vaughn-club-house#t=7:00" target="_blank" rel="noopener"><span>Club House <small>Live set</small></span><time datetime="PT49M39S">49:39</time><span aria-hidden="true">↗</span></a>
   </section>
