@@ -13,6 +13,7 @@ function setupMusic() {
     let ready = false;
     let needsCue = true;
     let pending = 0;
+    let externalFallback = false;
     let position = cueMs;
     let interacted = false;
     function startOnInteraction(event) {
@@ -42,6 +43,7 @@ function setupMusic() {
 
     function setPlayback(active) {
       clearTimeout(pending);
+      externalFallback = false;
       playing = active;
       publishPosition();
       document.body.classList.toggle("playing", active);
@@ -86,7 +88,8 @@ function setupMusic() {
       widget.play();
       clearTimeout(pending);
       pending = setTimeout(() => {
-        byId("preview-label").textContent = "Play on SoundCloud";
+        externalFallback = true;
+        byId("preview-label").textContent = "Play on SoundCloud ↗";
       }, 4500);
     });
   };
